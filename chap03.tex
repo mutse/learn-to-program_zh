@@ -1,0 +1,87 @@
+% chapter 3: Variables and Assignment
+\chapter{变量与赋值}
+
+So far, whenever we have putsed a string or a number, the thing we putsed is gone. What I mean is, if we wanted to print something out twice, we would have to type it in twice: \\
+
+\begin{lstlisting}[language=ruby]
+puts '...you can say that again...'
+puts '...you can say that again...'
+\end{lstlisting}
+\textcolor{red}{
+...you can say that again...\\
+...you can say that again...
+}
+
+It would be nice if we could just type it in once and then hang on to it... store it somewhere. Well, we can, of course—otherwise, I wouldn't have brought it up! 
+
+为了将字符串保存在计算机内存中，必须给字符串命名。通常，程序员称之为赋值，然后调用这些命名的变量。变量可以是任意字母和数字组成的序列，但首字符必须是小写字母。让我们再试一试上述最后一个程序，但这次将字符串命名为myString（当然也可将之命名为str或myOwnLittleString或henryTheEighth）。\\
+\begin{lstlisting}[language=ruby]
+myString = '...you can say that again...'
+puts myString
+puts myString
+\end{lstlisting}
+\textcolor{red}{
+...you can say that again...\\
+...you can say that again...
+}
+
+不论何时你厌烦使用myString时，程序都会用字符串`...you can say that again...'替换之。可以将变量myString认为是“指向”字符串`..you can say that again...'。下面有一个小巧有趣的例子：
+
+\begin{lstlisting}[language=ruby]
+name = 'Patricia Rosanna Jessica Mildred Oppenheimer'
+puts 'My name is ' + name + '.'
+puts 'Wow!  ' + name + ' is a really long name!
+\end{lstlisting}
+\textcolor{red}{
+My name is Patricia Rosanna Jessica Mildred Oppenheimer.\\
+Wow!  Patricia Rosanna Jessica Mildred Oppenheimer is a really long name!
+}
+
+不仅可以给变量赋值一个对象，也可以同一个变量重赋值不同的对象（这就是我们称之为变量的原因：因为她们所指向的内容可改变。）。
+\begin{lstlisting}[language=ruby]
+composer = 'Mozart'
+puts composer + ' was "da bomb", in his day.'
+
+composer = 'Beethoven'
+puts 'But I prefer ' + composer + ', personally.'
+\end{lstlisting}
+\textcolor{red}{
+Mozart was ``da bomb", in his day.\\
+But I prefer Beethoven, personally.
+}
+
+当然，变量可以指向任何类型的对象，而不仅仅是字符串：
+\begin{lstlisting}[language=ruby]
+var = 'just another ' + 'string'
+puts var
+
+var = 5 * (1+2)
+puts var
+\end{lstlisting}
+\textcolor{red}{
+just another string\\
+15
+}
+
+事实上，变量可以指向任何类型，除了其它变量外。如果尝试如下操作，其结果会是？
+\begin{lstlisting}[language=ruby]
+var1 = 8
+var2 = var1
+puts var1
+puts var2
+
+puts ''
+
+var1 = 'eight'
+puts var1
+puts var2
+\end{lstlisting}
+8\\
+8\\
+\\
+eight\\
+8\\
+
+首先，当将变量var2指向变量var1，其结果指向8（就如同变量var1所指向的值）。然后，将变量var1指向字符串`eight'，而变量var2并未指向变量var1，因此它仍指向8。
+
+至此，我们已学习了变量、数字和字符串，下一章学习结合在一起。

@@ -1,0 +1,134 @@
+% chapter 2: Letters
+\chapter{字符}
+
+至此，我们已经学了几乎有关数字的全部知识，那么关于字母、单词和文字呢？
+
+我们称程序中的字符集合为字符串（你可能会认为是标题中一连串的打印体字母）。为了便于看出源码中哪部分是字符串，我将它标成红色。下面是一些字符串：\\
+\textcolor{red}{
+\textquoteleft{Hello.}\textquoteright\\
+\textquoteleft{Ruby rocks.}\textquoteright\\
+\textquoteleft{5 is my favorite number... what is yours?}\textquoteright\\
+\textquoteleft{Snoopy says \#\%\^{}?\&*@! when he stubs his toe.}\textquoteright\\
+\textquoteleft{     }\textquoteright\\
+\textquoteleft{}\textquoteright
+}
+
+综上所述，字符串由标点符号、数字、字母和空格组成，而不仅仅是字母。最后一个字符串中不包含任何内容，我们称之为空字符串。
+
+我们习惯使用puts打印数字，不妨试一试使用它打印下面的一些字符串：
+\begin{lstlisting}[language=ruby]
+puts 'Hello, world!'
+puts ''
+puts 'Good-bye.'
+\end{lstlisting}
+\textcolor{red}{
+Hello, world!\\
+Good-bye.
+}
+
+问题解决得很棒。现在请您亲自尝试下一些字符串。
+
+\section{字符串算术运算}
+
+正如您可以做数值的算术运算，同样您也可以做字符串的算术运算。当然，您可以任意加字符串。
+让我们将两个字符串相加，看看puts输出什么结果。
+\begin{lstlisting}[language=ruby]
+puts 'I like' + 'apple pie.'
+\end{lstlisting}
+\textcolor{red}{
+I likeapple pie.
+}
+
+喔！我忘记在字符串`I like'和`apple pie'之间放置空格符。通常情况下，空格符无关紧要；但是在字符串中很重要（正如一句名言所说：计算机不会做你所想做的事情，而只会做那些你告诉它们如何做的事情。）。让我们再试试：
+\begin{lstlisting}[language=ruby]
+puts 'I like ' + 'apple pie.'
+puts 'I like' + ' apple pie.'
+\end{lstlisting}
+\textcolor{red}{
+I like apple pie.\\
+I like apple pie.
+}
+
+（正如你所见，任何字符串加上空格字符都毫无影响。）
+
+因此字符串可以相加，也可以相乘（无论如何，只能相乘数字）。请看：
+\begin{lstlisting}[language=ruby]
+puts 'blink ' * 4
+\end{lstlisting}
+撞击她的双眸\\
+(开个小玩笑...... 其结果如下:)\\
+\textcolor{red}{
+blink blink blink blink
+}
+
+如果您思考下，就不难理解透彻。毕竟，7 * 3 意思是7 + 7 + 7,因此`moo * 3'表示`moo' + `moo' + `moo'。
+
+\section{12 与 `12'}
+
+在进一步阅读前，我们必须确保理解数字与进制数的区别。例如，12是数字，而`12'是二进制字符串。
+
+不妨动手小试下牛刀:
+\begin{lstlisting}[language=ruby]
+puts  12  +  12
+puts '12' + '12'
+puts '12  +  12'
+\end{lstlisting}
+24\\
+1212\\
+12  +  12
+
+试试这个如何：
+\begin{lstlisting}[language=ruby]
+puts  2  *  5
+puts '2' *  5
+puts '2  *  5'
+\end{lstlisting}
+10\\
+22222\\
+2  *  5
+
+上述例子十分简明。尽管如此，如果您因不太细心而将字符串和数字混淆的话，您将遇到麻烦......
+
+\section{问题}
+
+在这个要点上您可能尝试过许多徒劳无功的试验。如果没有，这里有些：
+\begin{lstlisting}[language=ruby]
+puts '12' + 12
+puts '2' * '5'
+\end{lstlisting}
+\#<TypeError: can't convert Fixnum into String>
+
+嗯......这是一个错误的消息。问题在于您不能将一个数字和一个字符串相加，或将一个字符串和另一个字符串相乘。像下面这样做是毫无意义的：
+\begin{lstlisting}[language=ruby]
+puts 'Betty' + 12
+puts 'Fred' * 'John'
+\end{lstlisting}
+
+需要注意的是：您可以在程序中写`pig'*5，因为它表达的意思是5组`pig'字符串相加在一起。然而，却不能写5*`pig'，因为它表示`pig'组数字5，显然这是很荒谬的。
+
+最后，如果想在程序中打印“You're swell!”，该怎么写? 可以试试下面的操作：
+\begin{lstlisting}[language=ruby]
+puts 'You're swell!'
+\end{lstlisting}
+
+是的，即便不运行，它也不起作用。因为计算机认为我们已处理过字符串（这就是使用具有语法颜色标识功能的文本编辑器的好处。）。如何才能让计算机知道字符串中的停顿？因此我们必须使用 \ 转义，如下：
+\begin{lstlisting}[language=ruby]
+puts 'You\'re swell!'
+\end{lstlisting}
+You're swell!
+
+斜划线是一个转义字符。换而言之，若将斜划线和另一个字符放在一起，将转换成一个新的字符。
+\begin{lstlisting}[language=ruby]
+puts 'You\'re swell!'
+puts 'backslash at the end of a string:  \\'
+puts 'up\\down'
+puts 'up\down'
+\end{lstlisting}
+You're swell!\\
+backslash at the end of a string:  \textbackslash \\
+up\textbackslash{down} \\
+up$\backslash$down
+
+因为斜划线并未转义`d'字符，而是转义了它本身，所以最后两个字符串是相同的。尽管它们在代码中是不相同的，但是计算机却认为它们是一样的。
+
+若您还有其它的疑问，请继续阅读！毕竟，我不可能将本页中每一个问题作一一解答。
