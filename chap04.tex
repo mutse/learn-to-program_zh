@@ -1,0 +1,162 @@
+% chapter 4: Mixing It Up
+\chapter{结合在一起}
+
+我们已研究一些不同类型的对象，如数值和字符，并使用变量指向这些对象。接下来，我们想将它们组合在一起，漂亮地运行。
+
+如你所见，如果想要一个程序打印25，下述代码将丝毫不起作用，因为不能将数字和字符串作相加运算：
+
+\begin{lstlisting}[language=ruby]
+var1 = 2
+var2 = '5'
+
+puts var1 + var2
+\end{lstlisting}
+
+问题的局限在于计算机不理解你是否要得到结果7（2+5），或是想得到字符串25（`2' + `5'）。
+
+在相加之前，必须使用某种方法获取变量var1的字符串形式，或是变量var2的整型形式。
+
+\section{转换}
+
+为了获取一个对象的字符串形式，只需在其后简单地写上 .to\_s：
+
+\begin{lstlisting}[language=ruby]
+var1 = 2
+var2 = '5'
+
+puts var1.to_s + var2
+\end{lstlisting}
+\textcolor{red}{
+25
+}
+
+同样，使用to\_i 获取一个对象的整型形式，使用to\_f 获取浮点形式。让我们观察这三种方法在可以做或不能做的事情上多了些相近：
+\begin{lstlisting}[language=ruby]
+var1 = 2
+var2 = '5'
+
+puts var1.to_s + var2
+puts var1 + var2.to_i
+\end{lstlisting}
+\textcolor{red}{
+25\\
+7
+}
+
+注意，即使调用to\_s方法获取变量var1的字符串形式，但变量var1仍然指向2，而不是字符`2'。除非明确地给变量var1赋值（需要用=赋值），否则在程序生命期内它将指向2。
+
+现在，让我们亲自试一试下面一些非常有趣的（有点奇怪的）转换：
+
+\begin{lstlisting}[language=ruby]
+puts '15'.to_f
+puts '99.999'.to_f
+puts '99.999'.to_i
+puts ''
+puts '5 is my favorite number!'.to_i
+puts 'Who asked you about 5 or whatever?'.to_i
+puts 'Your momma did.'.to_f
+puts ''
+puts 'stringy'.to_s
+puts 3.to_i
+\end{lstlisting}
+\textcolor{red}{
+15.0 \\
+99.999 \\
+99 \\
+\\
+5 \\
+0 \\
+0.0 \\
+\\
+stringy \\
+3
+}
+
+因此，这可能让你觉得吃惊。第一个表达式是相当标准的，其结果是15.0。接着，将字符串`99.999'分别转换成浮点数和整型。浮点数转换是我们预料的结果，而整型转换是四舍五入的结果。
+
+接下来，将几个不同寻常的字符串转换成数值。to\_i方法会忽略无法识别的字符，而指向剩余的字符串。因此，第一个表达式转换结果是5；而其它的表达式，因为以字母开头，全部被忽略，所以计算结果选取0。
+
+最后，最后两个表达式没做任何转换，与我们预期的结果一致。
+
+\section{窥探 puts 方法}
+
+我们常用的这个方法有些古怪...看看下面的例子：
+
+\begin{lstlisting}[language=ruby]
+puts 20
+puts 20.to_s
+puts '20'
+\end{lstlisting}
+\textcolor{red}{
+20\\
+20\\
+20
+}
+
+为何三个表达式会输出相同的结果？最后两个相同，是因为20.to\_s的结果是`20'。而第一个，整型20？写下整数20意味着什么？正因为如此，当在一张纸上写下2和0时，你所写下的是一个字符串，并非一个整数。整数20是手指头和脚指头的个数，而不是2后面紧跟着0。
+
+我们的朋友puts背后隐藏着一个大秘密：在使用puts试图写一个对象之前，它会使用to\_s方法获取该对象的字符串形式。事实上，puts中的s表示字符串，puts实际意思是输出字符串。
+
+或许这并不那么激动万分，Ruby中有许多的对象（您将学习如何掌握这些方法）。如果尝试使用puts一个奇怪的对象，比如祖母的照片、一首音乐或一些别的东西，会产生什么结果。这些将在后文出现...
+
+在此期间，我们已经给您介绍了一些方法，这足以让我们编写一些有趣的程序...
+
+\section{gets和chomp方法}
+
+如果puts方法意味着输出字符串，我确信你能猜出gets代表什么意思。正如同puts方法用于输出字符串，gets方法仅仅用于取回字符串。gets方法将从何处取回字符串？
+
+当然，是从键盘输入中获取。因为只有键盘才能产生字符串，就完美地解决这个问题。若将gets方法直接放在那里，读取你所输入的内容至按下Enter键为止，会发生什么？请尝试下例：
+
+\begin{lstlisting}[language=ruby]
+puts gets
+\end{lstlisting}
+\textcolor{red}{
+Is there an echo in here? \\
+Is there an echo in here?
+}
+
+当然，你所输入的任何内容将重复回显。请尝试数次输入不同的内容。
+
+至此，我们可以编写交互的程序！在本例中，输入你的姓名，它将会问候你：
+\begin{lstlisting}[language=ruby]
+puts 'Hello there, and what\'s your name?'
+name = gets
+puts 'Your name is ' + name + '?  What a lovely name!'
+puts 'Pleased to meet you, ' + name + '.  :)'
+\end{lstlisting}
+
+呃！运行程序--我输入自己的名字，输出结果如下：
+\textcolor{red}{
+Hello there, and what's your name? \\
+Chris \\
+Your name is Chris \\
+?  What a lovely name! \\
+Pleased to meet you, Chris \\
+.  :)
+}
+
+嗯...看起来像是，当我输入字符C、h、r、i、s，然后按下Enter键，gets方法获取名字中所有的字符和Enter。很幸运的是，有一个方法仅用来排序的：chomp。它用来删除Enter并分配字符串结束符。请再次尝试此程序，这次chomp方法可以帮助我们：
+\begin{lstlisting}[language=ruby]
+puts 'Hello there, and what\'s your name?'
+name = gets.chomp
+puts 'Your name is ' + name + '?  What a lovely name!'
+puts 'Pleased to meet you, ' + name + '.  :)'
+\end{lstlisting}
+\textcolor{red}{
+Hello there, and what's your name? \\
+Chris \\
+Your name is Chris?  What a lovely name! \\
+Pleased to meet you, Chris.  :)
+}
+
+很棒！请注意，因为name变量指向gets.chomp方法，但我们并不这样说name.chomp。
+
+\section{尝试一些事情}
+
+\begin{itemize}
+\item 编写一个程序，用于询问一个人的名字、中间名和姓氏。最后，需要使用全名问候这个人。
+\item 编写一个程序，用于询问一个人喜欢的数字。程序能将这个数字加1，建议结果是个很大的、中意的数字。（务必得体）
+\end{itemize}
+
+一旦你完成这两个程序（你愿意尝试其它也行），让我们开始学习关于更多的方法。
+
